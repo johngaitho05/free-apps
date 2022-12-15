@@ -2,6 +2,17 @@
     'name': 'Automatic Mail Servers',
     'version': '16.0.1.0.0',
     'summary': 'Choose the correct mail server automatically',
+    'description':"""
+        Automatic mail Server
+        SMTPServerDisconnected
+        please run connect() first
+        Zoho issue fix
+        Mail Delivery
+        Outgoing mail servers
+        Fix mail Delivery
+        Fix email issue
+        Send emails
+    """,
     'category': 'Productivity/Discuss',
     'author': 'Gritnec Solutions',
     'website': 'https://gritnecsolutions.com',
