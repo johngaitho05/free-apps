@@ -4,8 +4,7 @@
     'summary': 'Choose the correct mail server automatically',
     'description':"""
         Automatic mail Server
-        SMTPServerDisconnected
-        please run connect() first
+        SMTPServerDisconnected please run connect() first
         Zoho issue fix
         Mail Delivery
         Outgoing mail servers
