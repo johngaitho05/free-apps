@@ -6,7 +6,9 @@ class MailMail(models.Model):
 
     def send(self, auto_commit=False, raise_exception=False):
         for mail in self:
-            emails = re.findall(r"[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+", mail.email_from)
+            emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', mail.email_from or '')
+            if not emails:
+                continue
             if not mail.mail_server_id or not emails or mail.mail_server_id.smtp_user != emails[0]:
                 mail_server = self.env['ir.mail_server'].sudo().search([('smtp_user','=',emails[0])],limit=1)
                 if not mail_server:
@@ -19,5 +21,3 @@ class MailMail(models.Model):
                     mail.email_from = partner.email_formatted if partner else self.env.company.email_formatted
 
         return super(MailMail, self).send(auto_commit=auto_commit,raise_exception=raise_exception)
-
-
