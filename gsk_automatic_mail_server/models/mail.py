@@ -4,11 +4,9 @@ import re
 class MailMail(models.Model):
     _inherit = 'mail.mail'
 
-    def send(self, auto_commit=False, raise_exception=False):
+    def send(self, auto_commit=False, raise_exception=False, post_send_callback=None):
         for mail in self:
-            emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', mail.email_from or '')
-            if not emails:
-                continue
+            emails = re.findall(r"[a-z0-9.\-+_]+@[a-z0-9.\-+_]+\.[a-z]+", mail.email_from)
             if not mail.mail_server_id or not emails or mail.mail_server_id.smtp_user != emails[0]:
                 mail_server = self.env['ir.mail_server'].sudo().search([('smtp_user','=',emails[0])],limit=1)
                 if not mail_server:
@@ -20,4 +18,4 @@ class MailMail(models.Model):
                     partner = self.env['res.partner'].sudo().search([('email','=',mail_server.smtp_user)],limit=1)
                     mail.email_from = partner.email_formatted if partner else self.env.company.email_formatted
 
-        return super(MailMail, self).send(auto_commit=auto_commit,raise_exception=raise_exception)
+        return super(MailMail, self).send(auto_commit=auto_commit,raise_exception=raise_exception, post_send_callback=post_send_callback)
